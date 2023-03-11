@@ -6,4 +6,6 @@ export class EventDto {
   password?: string;
   startDate: Date;
   endDate: Date;
+  createdAt: Date;
+  updatedAt: Date;
 }

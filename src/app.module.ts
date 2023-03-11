@@ -5,6 +5,7 @@ import { DataSource, DataSourceOptions } from 'typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { EventModule } from './event/event.module';
+import { UserModule } from './user/user.module';
 import databaseConfig from './config/database';
 
 const typeOrmConfig = {
@@ -21,7 +22,7 @@ const typeOrmConfig = {
 };
 
 @Module({
-  imports: [EventModule, TypeOrmModule.forRootAsync(typeOrmConfig)],
+  imports: [EventModule, TypeOrmModule.forRootAsync(typeOrmConfig), UserModule],
   controllers: [AppController],
   providers: [AppService],
 })
