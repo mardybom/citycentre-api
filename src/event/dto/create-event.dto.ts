@@ -1,8 +1,8 @@
 export class CreateEventDto {
   title: string;
   capacity: number;
-  is_private: boolean;
+  isPrivate: boolean;
   password?: string;
-  start_date: Date;
-  end_date: Date;
+  startDate: Date;
+  endDate: Date;
 }

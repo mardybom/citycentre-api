@@ -16,10 +16,10 @@ export class EventService {
     const event = new Event();
     event.title = createEventDto.title;
     event.capacity = createEventDto.capacity;
-    event.is_private = createEventDto.is_private;
+    event.isPrivate = createEventDto.isPrivate;
     event.password = createEventDto.password;
-    event.start_date = createEventDto.start_date;
-    event.end_date = createEventDto.end_date;
+    event.startDate = createEventDto.startDate;
+    event.endDate = createEventDto.endDate;
 
     return this.eventRepository.save(event);
   }
@@ -36,10 +36,10 @@ export class EventService {
     const event = new Event();
     event.title = updateEventDto.title;
     event.capacity = updateEventDto.capacity;
-    event.is_private = updateEventDto.is_private;
+    event.isPrivate = updateEventDto.isPrivate;
     event.password = updateEventDto.password;
-    event.start_date = updateEventDto.start_date;
-    event.end_date = updateEventDto.end_date;
+    event.startDate = updateEventDto.startDate;
+    event.endDate = updateEventDto.endDate;
 
     return this.eventRepository.save({ eventId: id, ...event });
   }
