@@ -23,7 +23,12 @@ const typeOrmConfig = {
 };
 
 @Module({
-  imports: [EventModule, TypeOrmModule.forRootAsync(typeOrmConfig), UserModule, AuthModule],
+  imports: [
+    EventModule,
+    UserModule,
+    AuthModule,
+    TypeOrmModule.forRootAsync(typeOrmConfig),
+  ],
   controllers: [AppController],
   providers: [AppService],
 })
