@@ -8,6 +8,9 @@
   "scripts": {
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
+    "run:services": "docker-compose up -d && exit 0",
+    "stop:services": "docker-compose stop",
+    "remove:services": "docker-compose down",
     "migration:generate": "npm run typeorm -- migration:create",
     "migrate": "npm run typeorm -- migration:run -d src/config/ormconfig-migration.ts",
     "migrate:down": "npm run typeorm -- migration:revert -d src/config/ormconfig-migration.ts",

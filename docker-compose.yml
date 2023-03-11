@@ -1,0 +1,12 @@
+version: '3'
+services:
+  db:
+    container_name: citycentre_db
+    image: postgres:12.2
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    volumes:
+      - ./db/initdb.d:/docker-entrypoint-initdb.d
+    ports:
+      - '5445:5432'
