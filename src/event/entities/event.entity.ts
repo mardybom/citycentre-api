@@ -1,9 +1,12 @@
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+
+@Entity()
 export class Event {
-  eventId: string;
-  title: string;
-  capacity: number;
-  is_private: boolean;
-  password?: string;
-  start_date: string;
-  end_date: string;
+  @PrimaryGeneratedColumn('uuid') eventId: string;
+  @Column({ type: 'varchar', nullable: false }) title: string;
+  @Column({ type: 'integer', nullable: false }) capacity: number;
+  @Column({ type: 'boolean', nullable: false }) is_private: boolean;
+  @Column({ type: 'varchar', nullable: true }) password?: string;
+  @Column({ type: 'timestamp', nullable: false }) start_date: Date;
+  @Column({ type: 'timestamp', nullable: false }) end_date: Date;
 }

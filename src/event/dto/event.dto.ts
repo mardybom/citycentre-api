@@ -4,6 +4,6 @@ export class EventDto {
   capacity: number;
   is_private: boolean;
   password?: string;
-  start_date: string;
-  end_date: string;
+  start_date: Date;
+  end_date: Date;
 }

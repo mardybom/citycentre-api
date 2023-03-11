@@ -8,6 +8,10 @@
   "scripts": {
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
+    "migration:generate": "npm run typeorm -- migration:create",
+    "migrate": "npm run typeorm -- migration:run -d src/config/ormconfig-migration.ts",
+    "migrate:down": "npm run typeorm -- migration:revert -d src/config/ormconfig-migration.ts",
+    "typeorm": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js",
     "start": "nest start",
     "start:dev": "nest start --watch",
     "start:debug": "nest start --debug --watch",
@@ -21,12 +25,16 @@
   },
   "dependencies": {
     "@nestjs/common": "^9.0.0",
+    "@nestjs/config": "^2.3.1",
     "@nestjs/core": "^9.0.0",
     "@nestjs/mapped-types": "*",
     "@nestjs/platform-express": "^9.0.0",
+    "@nestjs/typeorm": "^9.0.1",
     "dotenv": "^16.0.3",
+    "pg": "^8.10.0",
     "reflect-metadata": "^0.1.13",
-    "rxjs": "^7.2.0"
+    "rxjs": "^7.2.0",
+    "typeorm": "^0.3.12"
   },
   "devDependencies": {
     "@nestjs/cli": "^9.0.0",
@@ -48,7 +56,7 @@
     "ts-jest": "29.0.3",
     "ts-loader": "^9.2.3",
     "ts-node": "^10.0.0",
-    "tsconfig-paths": "4.1.1",
+    "tsconfig-paths": "^4.1.2",
     "typescript": "^4.7.4"
   },
   "jest": {
