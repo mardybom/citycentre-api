@@ -1,6 +1,6 @@
-import { EventDto } from 'src/event/dto/event.dto';
-import { UserDto } from 'src/user/dto/user.dto';
-import { User } from 'src/user/entities/user.entity';
+import { EventDto } from '../event/dto/event.dto';
+import { UserDto } from '../user/dto/user.dto';
+import { User } from '../user/entities/user.entity';
 import { Event } from '../event/entities/event.entity';
 
 export const toEventDto = (data: Event): EventDto => {

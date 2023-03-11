@@ -6,6 +6,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { EventModule } from './event/event.module';
 import { UserModule } from './user/user.module';
+import { AuthModule } from './auth/auth.module';
 import databaseConfig from './config/database';
 
 const typeOrmConfig = {
@@ -22,7 +23,7 @@ const typeOrmConfig = {
 };
 
 @Module({
-  imports: [EventModule, TypeOrmModule.forRootAsync(typeOrmConfig), UserModule],
+  imports: [EventModule, TypeOrmModule.forRootAsync(typeOrmConfig), UserModule, AuthModule],
   controllers: [AppController],
   providers: [AppService],
 })

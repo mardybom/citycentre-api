@@ -6,7 +6,7 @@ import { LoginUserDto } from './dto/login-user.dto';
 import { UserDto } from './dto/user.dto';
 import { User } from './entities/user.entity';
 import { comparePassword } from '../shared/utils';
-import { toUserDto } from 'src/shared/mapper';
+import { toUserDto } from '../shared/mapper';
 
 @Injectable()
 export class UserService {
@@ -48,7 +48,7 @@ export class UserService {
     }
 
     // compare password
-    const isEqual = comparePassword(user.password, password);
+    const isEqual = await comparePassword(user.password, password);
 
     if (!isEqual) {
       throw new HttpException('Invalid credentials', HttpStatus.UNAUTHORIZED);
