@@ -1,35 +1,50 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 import { CreateEventDto } from './dto/create-event.dto';
 import { UpdateEventDto } from './dto/update-event.dto';
-import { events } from '../mock/events.mock';
 import { Event } from './entities/event.entity';
-import { toEventDto } from 'src/shared/mapper';
 
 @Injectable()
 export class EventService {
-  events: Event[] = events;
+  constructor(
+    @InjectRepository(Event)
+    private readonly eventRepository: Repository<Event>,
+  ) {}
 
-  create(createEventDto: CreateEventDto) {
-    return 'This action adds a new event';
+  create(createEventDto: CreateEventDto): Promise<Event> {
+    const event = new Event();
+    event.title = createEventDto.title;
+    event.capacity = createEventDto.capacity;
+    event.is_private = createEventDto.is_private;
+    event.password = createEventDto.password;
+    event.start_date = createEventDto.start_date;
+    event.end_date = createEventDto.end_date;
+
+    return this.eventRepository.save(event);
   }
 
   findAll() {
-    return this.events;
+    return this.eventRepository.find();
   }
 
   findOne(id: string) {
-    const todo = this.events.find((event) => event.eventId === id);
-    if (!todo) {
-      throw new HttpException(`Event doesn't exist`, HttpStatus.BAD_REQUEST);
-    }
-    return toEventDto(todo);
+    return this.eventRepository.findOneBy({ eventId: id });
   }
 
-  update(id: number, updateEventDto: UpdateEventDto) {
-    return `This action updates a #${id} event`;
+  update(id: string, updateEventDto: UpdateEventDto): Promise<Event> {
+    const event = new Event();
+    event.title = updateEventDto.title;
+    event.capacity = updateEventDto.capacity;
+    event.is_private = updateEventDto.is_private;
+    event.password = updateEventDto.password;
+    event.start_date = updateEventDto.start_date;
+    event.end_date = updateEventDto.end_date;
+
+    return this.eventRepository.save({ eventId: id, ...event });
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} event`;
+  async remove(id: string): Promise<void> {
+    await this.eventRepository.delete({ eventId: id });
   }
 }
