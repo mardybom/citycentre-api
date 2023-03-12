@@ -36,8 +36,9 @@ export class UserService {
     return toUserDto(user);
   }
 
-  findOne(options?: object): Promise<UserDto> {
-    return this.userRepository.findOne(options);
+  async findOne(options?: object): Promise<UserDto> {
+    const user = await this.userRepository.findOne(options);
+    return toUserDto(user);
   }
 
   async findByLogin({ username, password }: LoginUserDto): Promise<UserDto> {

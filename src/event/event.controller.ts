@@ -12,7 +12,6 @@ import {
 import { EventService } from './event.service';
 import { CreateEventDto } from './dto/create-event.dto';
 import { UpdateEventDto } from './dto/update-event.dto';
-import { Event } from './entities/event.entity';
 import { AuthGuard } from '@nestjs/passport';
 import { EventDto } from './dto/event.dto';
 import { UserDto } from '../user/dto/user.dto';
