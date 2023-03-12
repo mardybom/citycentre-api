@@ -2,9 +2,12 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { User } from 'src/user/entities/user.entity';
 
 @Entity()
 export class Event {
@@ -28,6 +31,12 @@ export class Event {
 
   @Column({ name: 'end_date', type: 'timestamp', nullable: false })
   endDate: Date;
+
+  @ManyToOne(() => User, (user) => user.organizerOf)
+  organizer: User;
+
+  @OneToMany(() => User, (user) => user.memberOf)
+  members: User[];
 
   @CreateDateColumn({ name: 'created_at' })
   createdAt: Date;

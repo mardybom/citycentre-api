@@ -1,4 +1,5 @@
 import { IsEmail, IsNotEmpty } from 'class-validator';
+import { EventDto } from '../../event/dto/event.dto';
 
 export class UserDto {
   @IsNotEmpty()
@@ -13,6 +14,10 @@ export class UserDto {
 
   @IsNotEmpty()
   lastName: string;
+
+  organizerOf: EventDto[];
+
+  memberOf: EventDto;
 
   createdAt: Date;
 

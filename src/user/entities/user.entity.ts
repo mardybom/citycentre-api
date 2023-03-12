@@ -3,10 +3,13 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 import { hash } from 'bcrypt';
+import { Event } from 'src/event/entities/event.entity';
 
 @Entity()
 export class User {
@@ -24,6 +27,12 @@ export class User {
 
   @Column({ name: 'last_name', type: 'varchar', nullable: false })
   lastName: string;
+
+  @OneToMany(() => Event, (event) => event.organizer)
+  organizerOf: Event[];
+
+  @ManyToOne(() => Event, (event) => event.members)
+  memberOf: Event;
 
   @CreateDateColumn({ name: 'created_at' })
   createdAt: Date;
