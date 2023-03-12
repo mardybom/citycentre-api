@@ -39,8 +39,15 @@ export class EventController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string): Promise<Event> {
+  findOne(@Param('id') id: string): Promise<EventDto> {
     return this.eventService.findOne(id);
+  }
+
+  @Put(':id/join')
+  @UseGuards(AuthGuard())
+  async join(@Param('id') id: string, @Req() req: any): Promise<EventDto> {
+    const user = req.user as UserDto;
+    return this.eventService.joinEvent(id, user);
   }
 
   @Put(':id')

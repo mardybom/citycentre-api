@@ -60,4 +60,8 @@ export class UserService {
   async findByPayload({ username }: any): Promise<UserDto> {
     return await this.userRepository.findOne({ where: { username } });
   }
+
+  async update(id: string, user: User) {
+    await this.userRepository.update({ userId: id }, { ...user });
+  }
 }

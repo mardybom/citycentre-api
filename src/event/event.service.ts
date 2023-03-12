@@ -8,6 +8,7 @@ import { Event } from './entities/event.entity';
 import { EventDto } from './dto/event.dto';
 import { UserService } from '../user/user.service';
 import { toEventDto } from '../shared/mapper';
+import { User } from 'src/user/entities/user.entity';
 
 @Injectable()
 export class EventService {
@@ -46,11 +47,47 @@ export class EventService {
     return events.map((event) => toEventDto(event));
   }
 
-  findOne(id: string) {
-    return this.eventRepository.findOne({
+  async findOne(id: string) {
+    const event = await this.eventRepository.findOne({
       where: { eventId: id },
       relations: ['organizer', 'members'],
     });
+    return toEventDto(event);
+  }
+
+  async joinEvent(id: string, { username }: UserDto): Promise<EventDto> {
+    let event = await this.eventRepository.findOne({
+      where: { eventId: id },
+      relations: ['members'],
+    });
+
+    if (!event) {
+      throw new HttpException(`Event doesn't exist`, HttpStatus.BAD_REQUEST);
+    }
+    // check if the event is full
+    if (event.members.length >= event.capacity) {
+      throw new HttpException(`Event is already full`, HttpStatus.FORBIDDEN);
+    }
+
+    // get user from the db
+    const user = (await this.userService.findOne({
+      where: { username },
+    })) as User;
+
+    // TODO: make these operations as a transaction
+    event.members.push(user);
+    await this.eventRepository.save({ ...event });
+
+    user.memberOf = event;
+    await this.userService.update(user.userId, user);
+
+    // re-query
+    event = await this.eventRepository.findOne({
+      where: { eventId: id },
+      relations: ['organizer', 'members'],
+    });
+
+    return toEventDto(event);
   }
 
   async update(
