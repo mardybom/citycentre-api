@@ -1,14 +1,14 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { UserDto } from '../user/dto/user.dto';
-import { Repository } from 'typeorm';
+import { DataSource, Repository } from 'typeorm';
 import { CreateEventDto } from './dto/create-event.dto';
 import { UpdateEventDto } from './dto/update-event.dto';
 import { Event } from './entities/event.entity';
 import { EventDto } from './dto/event.dto';
 import { UserService } from '../user/user.service';
 import { toEventDto } from '../shared/mapper';
-import { User } from 'src/user/entities/user.entity';
+import { User } from '../user/entities/user.entity';
 
 @Injectable()
 export class EventService {
@@ -16,6 +16,7 @@ export class EventService {
     @InjectRepository(Event)
     private readonly eventRepository: Repository<Event>,
     private readonly userService: UserService,
+    private readonly dataSource: DataSource,
   ) {}
 
   async create(
@@ -70,16 +71,20 @@ export class EventService {
     }
 
     // get user from the db
-    const user = (await this.userService.findOne({
+    let user = (await this.userService.findOne({
       where: { username },
     })) as User;
 
-    // TODO: make these operations as a transaction
-    event.members.push(user);
-    await this.eventRepository.save({ ...event });
-
-    user.memberOf = event;
-    await this.userService.update(user.userId, user);
+    // add user to event and vice versa
+    await this.dataSource.transaction(async (manager) => {
+      event.members.push(user);
+      event = await manager.save(event);
+      user = await manager.findOne(User, {
+        where: { userId: user.userId },
+      });
+      user.memberOf = event;
+      await manager.save(user);
+    });
 
     // re-query
     event = await this.eventRepository.findOne({

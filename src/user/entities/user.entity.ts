@@ -9,7 +9,7 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 import { hash } from 'bcrypt';
-import { Event } from 'src/event/entities/event.entity';
+import { Event } from '../../event/entities/event.entity';
 
 @Entity()
 export class User {
