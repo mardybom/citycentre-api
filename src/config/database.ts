@@ -14,7 +14,7 @@ export default registerAs(
       migrationsRun: true,
       migrationsTableName: 'migrations',
       keepConnectionAlive: true,
-      synchronize: true,
+      synchronize: false,
       type: 'postgres',
       host: process.env.DATABASE_HOSTNAME,
       port: Number(process.env.DATABASE_PORT),
