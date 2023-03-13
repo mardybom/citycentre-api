@@ -16,7 +16,7 @@ import { RegistrationStatus } from './interfaces/registration.interface';
 import { LoginStatus } from './interfaces/login-status.interface';
 import { JwtPayload } from './interfaces/payload.interface';
 
-@Controller('auth')
+@Controller('api/auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
