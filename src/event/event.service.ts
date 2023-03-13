@@ -75,6 +75,28 @@ export class EventService {
       where: { username },
     })) as User;
 
+    // get previously joined event
+    if (user.memberOf) {
+      const prevEvent = await this.eventRepository.findOneBy({
+        eventId: user.memberOf.eventId,
+      });
+      prevEvent.members = prevEvent.members.filter(
+        (member) => member.userId === user.userId,
+      );
+      await this.dataSource.transaction(async (manager) => {
+        // remove user from previous event
+        manager.save(prevEvent);
+        // add user to event and vice versa
+        event.members.push(user);
+        event = await manager.save(event);
+        user = await manager.findOne(User, {
+          where: { userId: user.userId },
+        });
+        user.memberOf = event;
+        await manager.save(user);
+      });
+    }
+
     // add user to event and vice versa
     await this.dataSource.transaction(async (manager) => {
       event.members.push(user);
