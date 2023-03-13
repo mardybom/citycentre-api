@@ -1,73 +1,69 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
+# City Centre API
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
-
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
-
-## Description
-
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+This is a NestJS application that requires some additional setup before it can be run. Please follow the instructions below to set up and run the application.
 
 ## Installation
 
-```bash
-$ npm install
-```
+1.  Clone the repository to your local machine.
+2.  Navigate to the project directory in your terminal.
+3.  Run `npm install` to install all required dependencies.
 
-## Running the app
+## Setting up the Environment
 
-```bash
-# development
-$ npm run start
+Before running the application, you need to set up the environment variables.
 
-# watch mode
-$ npm run start:dev
+1.  In the project directory, create a new file called `.env`.
+2.  In the `.env` file, define the following environment variables:
+    - `PORT` - the port to which the server is listening
+    - `DATABASE_HOSTNAME` - the hostname of the PostgreSQL database
+    - `DATABASE_PORT` - the port of the PostgreSQL database
+    - `DATABASE_USERNAME` - the username of the PostgreSQL database
+    - `DATABASE_PASSWORD` - the password of the PostgreSQL database
+    - `DATABASE_NAME` - the name of the PostgreSQL database
+    - `SECRETKEY` - the secret used to sign JWT tokens
+    - `EXPIRESIN` - the expiration time (in seconds) for JWT tokens
 
-# production mode
-$ npm run start:prod
-```
+Example `.env` file:
 
-## Test
+    PORT=8080
 
-```bash
-# unit tests
-$ npm run test
+    DATABASE_HOSTNAME=localhost
+    DATABASE_PORT=5445
+    DATABASE_USERNAME=citycentre
+    DATABASE_PASSWORD=password
+    DATABASE_NAME=citycentre
 
-# e2e tests
-$ npm run test:e2e
+    SECRETKEY=secretkey
+    EXPIRESIN=12h
 
-# test coverage
-$ npm run test:cov
-```
+## Starting the Database
 
-## Support
+Before running the application, you need to start the PostgreSQL database container.
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+1.  In your terminal, navigate to the project directory.
+2.  Run `npm run run:services` to start the Docker container with PostgreSQL.
 
-## Stay in touch
+## Database Migration
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+Once the database container is running, you can migrate the database schema.
 
-## License
+1.  In your terminal, navigate to the project directory.
+2.  Run `npm run migrate` to run the database migration.
 
-Nest is [MIT licensed](LICENSE).
+## Running the Application
+
+To run the application:
+
+1.  In your terminal, navigate to the project directory.
+2.  Run `npm start` to start the application.
+
+By default, the application will use the following credentials for authentication:
+
+- Username: <jon@email.com>
+- Password: password
+
+Please note that these credentials should be changed in a production environment for security reasons.
+
+## Conclusion
+
+Following the instructions in this readme should enable you to successfully set up and run this NestJS application. If you have any issues or questions, please don't hesitate to contact the developer.
